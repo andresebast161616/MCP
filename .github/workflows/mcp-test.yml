@@ -1,0 +1,19 @@
+name: MCP
+
+on: [push, pull_request]
+
+jobs:
+  check-mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Start MCP Server
+        run: |
+          python mcp_server.py &
+          sleep 2
+      - name: Run Test Client
+        run: python mcp_client_auto.py
